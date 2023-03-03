@@ -12,10 +12,13 @@ namespace BranchExample
             branches = new List<Branch>();
         }
 
+        // Function to add branch
         public void AddBranch(Branch branch)
         {
             branches.Add(branch);
         }
+
+        //Function to print the branches
         public void Print(int depth = 0)
         {
             Console.WriteLine(new string('-', depth) + " " + "Branch");
