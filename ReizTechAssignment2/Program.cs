@@ -1,56 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ReizTechAssignment2
+namespace BranchExample
 {
-    internal class Branch
+    class Branch
+    {
+        List<Branch> branches;
+
+        public Branch()
+        {
+            branches = new List<Branch>();
+        }
+
+        public void AddBranch(Branch branch)
+        {
+            branches.Add(branch);
+        }
+        public void Print(int depth = 0)
+        {
+            Console.WriteLine(new string('-', depth) + " " + "Branch");
+            foreach (var branch in branches)
+            {
+                branch.Print(depth + 1);
+            }
+        }
+    }
+
+    class Program
     {
         static void Main(string[] args)
         {
-            // Create the root node
-            Node root = new Node("Root");
+            // Create a root branch, Depth 1
+            Branch root = new Branch();
 
-            // Add some child nodes
-            Node child1 = new Node("Child 1");
-            root.AddChild(child1);
-            Node child2 = new Node("Child 2");
-            root.AddChild(child2);
-            Node child3 = new Node("Child 3");
-            root.AddChild(child3);
+            // Depth 2
+            Branch child1 = new Branch();
+            Branch child2 = new Branch();
+            root.AddBranch(child1);
+            root.AddBranch(child2);
 
-            // Add some child nodes to child1
-            Node grandchild1 = new Node("Grandchild 1");
-            child1.AddChild(grandchild1);
-            Node grandchild2 = new Node("Grandchild 2");
-            child1.AddChild(grandchild2);
+            // Depth 3
+            Branch grandChild1 = new Branch();
+            Branch grandChild2 = new Branch();
+            Branch grandChild3 = new Branch();
+            Branch grandChild4 = new Branch();
+            child1.AddBranch(grandChild1);
+            child2.AddBranch(grandChild2);
+            child2.AddBranch(grandChild3);
+            child2.AddBranch(grandChild4);
 
-            // Traverse the tree
-            root.Traverse();
-        }
-    }
-    class Node
-    {
-        public string Name { get; set; }
-        public List<Node> Children { get; set; }
+            // Depth 4
+            Branch greatGrandChild1 = new Branch();
+            Branch greatGrandChild2 = new Branch();
+            Branch greatGrandChild3 = new Branch();
+            grandChild2.AddBranch(greatGrandChild1);
+            grandChild3.AddBranch(greatGrandChild2);
+            grandChild3.AddBranch(greatGrandChild3);
 
-        public Node(string name)
-        {
-            Name = name;
-            Children = new List<Node>();
-        }
+            // Depth 5
+            Branch greatGreatGrandChild1 = new Branch();
+            greatGrandChild2.AddBranch(greatGreatGrandChild1);
 
-        public void AddChild(Node child)
-        {
-            Children.Add(child);
-        }
 
-        public void Traverse()
-        {
-            Console.WriteLine(Name);
-            foreach (Node child in Children)
-            {
-                child.Traverse();
-            }
+            root.Print();
         }
     }
 }
